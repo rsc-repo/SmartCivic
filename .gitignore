@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+
+# Build output
+dist/
+.next/
+out/
+
+# Environment
+.env
+.env.local
+*.env.local
+
+# Uploaded media (local disk storage)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Logs / OS
+*.log
+.DS_Store

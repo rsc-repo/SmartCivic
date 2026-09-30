@@ -1,0 +1,37 @@
+{
+  "name": "SmartCivic (Node + PostgreSQL/PostGIS)",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bookworm",
+
+  // Runs once, the first time the Codespace is created — installs
+  // PostgreSQL + PostGIS, creates the db, loads the schema, installs
+  // backend/frontend deps, and seeds test data. See setup.sh for details.
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  // Runs every time the Codespace starts (including after it's been
+  // stopped/resumed) — postCreateCommand only runs once, but the
+  // Postgres service needs to be (re)started on every boot.
+  "postStartCommand": "sudo service postgresql start",
+
+  "forwardPorts": [3000, 3001, 5432],
+  "portsAttributes": {
+    "3000": { "label": "Frontend (Next.js)", "onAutoForward": "openPreview" },
+    "3001": { "label": "Backend API (NestJS)", "onAutoForward": "notify" },
+    "5432": { "label": "PostgreSQL", "onAutoForward": "silent" }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
+      ]
+    }
+  },
+
+  // The base image's default non-root user; has passwordless sudo,
+  // which setup.sh needs for `apt-get install postgresql postgis`.
+  "remoteUser": "node"
+}
